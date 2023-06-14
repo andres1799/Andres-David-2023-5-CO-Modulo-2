@@ -8,7 +8,7 @@ class Enemy(Sprite):
     ENEMY_WIDTH = 40
     ENEMY_HEIGTH = 60
     X_POS_LIST = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850, 900, 950, 1000]
-    Y_POS = 20
+    Y_POS = 10
     seed = int(time.time())
     random.seed(seed)
 
@@ -18,8 +18,8 @@ class Enemy(Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS_LIST[random.randint(0, 18)]
         self.rect.y = self.Y_POS
-        self.speed_x = speed_x
-        self.speed_y = speed_y
+        self.speed_x = speed_x[0] if image_enemy == ENEMY_1 else speed_x[1]
+        self.speed_y = speed_y[0] if image_enemy == ENEMY_1 else speed_y[1]
         self.movement_x = self.MOV_X[random.randint(0, 1)]
         self.move_x_for = random.randint(30, 200)
         self.index = 0
