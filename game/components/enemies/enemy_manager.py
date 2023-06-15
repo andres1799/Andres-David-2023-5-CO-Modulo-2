@@ -14,6 +14,7 @@ class EnemyManager:
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)
+
     def add_enemy(self):
         enemy_type = self.IMAGE_ENEMY[random.randint(0, 1)]
         if enemy_type == ENEMY_1:
@@ -22,7 +23,11 @@ class EnemyManager:
         else:
             speed_x = 5
             speed_y = 6
-        if len(self.enemies) < 2:# or time.time() - self.last_enemy_time >= 6:
+        if len(self.enemies) < 2: #or time.time() - self.last_enemy_time >= 2:
             enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 1)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
+    def destroyEnemy(self, bullet):
+        for enemy in self.enemies:
+            if enemy.rect.colliderect(bullet.rect):
+                self.enemies.remove(enemy)
