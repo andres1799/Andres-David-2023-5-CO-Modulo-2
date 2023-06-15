@@ -20,16 +20,16 @@ class Spaceship(Sprite):
 
 
     def update(self, user_input, bullet_manager):
-        if user_input[pygame.K_LEFT]:
-            self.move_left()
-        elif user_input[pygame.K_RIGHT]:
-            self.move_right()
-        elif user_input[pygame.K_UP]:
-            self.move_up()
-        elif user_input[pygame.K_DOWN]:
-            self.move_down()
-        elif user_input[pygame.K_j]:
-            self.shoot(bullet_manager)
+        key_actions = {
+            pygame.K_LEFT: self.move_left,
+            pygame.K_RIGHT: self.move_right,
+            pygame.K_UP: self.move_up,
+            pygame.K_DOWN: self.move_down,
+            pygame.K_j: lambda: self.shoot(bullet_manager)
+        }
+        for key, action in key_actions.items():
+            if user_input[key]:
+                action()
 
     def move_left(self):
         self.rect.x -= self.SPEED
