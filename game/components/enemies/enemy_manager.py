@@ -7,19 +7,22 @@ class EnemyManager:
         self.enemies = []
         self.last_enemy_time = time.time()
         self.IMAGE_ENEMY = {0: ENEMY_1, 1: ENEMY_2}
-    def update(self):
+    def update(self, game):
         self.add_enemy()
         for enemy in self.enemies:
-            enemy.update(self.enemies)
+            enemy.update(self.enemies, game)
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)
     def add_enemy(self):
-        if len(self.enemies) < 1 or time.time() - self.last_enemy_time >= 6:
-            #speed_y = random.randint(1,5)
-            #speed_x = random.randint(1,8)
-            speed_y = [3, 5]
-            speed_x = [2, 5]
-            enemy = Enemy(self.IMAGE_ENEMY[random.randint(0,1)], speed_x, speed_y)
+        enemy_type = self.IMAGE_ENEMY[random.randint(0, 1)]
+        if enemy_type == ENEMY_1:
+            speed_x = 3
+            speed_y = 4
+        else:
+            speed_x = 5
+            speed_y = 6
+        if len(self.enemies) < 2:# or time.time() - self.last_enemy_time >= 6:
+            enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 1)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
