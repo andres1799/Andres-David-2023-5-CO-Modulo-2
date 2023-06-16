@@ -10,7 +10,10 @@ class Menu:
         self.text = self.font.render(message, True, (0, 0, 0))
         self.text_rect = self.text.get_rect()
         self.text_rect.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT)
-
+        self.actualscreen = False
+        self.score = 0
+        self.highscore = 0
+        self.deaths = 0
 
     def update(self, game):
         pygame.display.update()
@@ -18,6 +21,12 @@ class Menu:
 
     def draw(self, screen):
         screen.blit(self.text, self.text_rect)
+        if self.actualscreen:
+            screen.blit(self.score, self.text_rect2)
+            screen.blit(self.highscore, self.text_rect3)
+            screen.blit(self.deaths, self.text_rect4)
+
+
     def handle_events_on_menu(self, game):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -27,7 +36,23 @@ class Menu:
                 game.run()
     def reset(self, screen):
         screen.fill((255, 255, 255))
+
     def update_message(self, message):
         self.text = self.font.render(message, True, (0, 0, 0))
         self.text_rect = self.text.get_rect()
-        self.text_rect.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT)
+        self.text_rect.center = (self.HALF_SCREEN_WIDTH + 20, self.HALF_SCREEN_HEIGHT)
+
+    def show_scores(self, score, highscore, deaths):
+        self.score = self.font.render("Your score: " + score, True, (0, 0, 0))
+        self.text_rect2 = self.score.get_rect()
+        self.text_rect2.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 50)
+
+        self.highscore = self.font.render("Highest score: " + highscore, True, (0, 0, 0))
+        self.text_rect3 = self.highscore.get_rect()
+        self.text_rect3.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 100)
+
+        self.deaths = self.font.render("Total deaths: " + deaths, True, (0, 0, 0))
+        self.text_rect4 = self.score.get_rect()
+        self.text_rect4.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 150)
+
+

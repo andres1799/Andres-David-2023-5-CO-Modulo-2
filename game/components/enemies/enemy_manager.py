@@ -32,5 +32,7 @@ class EnemyManager:
         for enemy in self.enemies:
             if enemy.rect.colliderect(bullet.rect):
                 self.enemies.remove(enemy)
-                game.update_score()
+                score = game.scoremanager.update_score()
+                game.scoremanager.scorelist(score)
+                return True
 

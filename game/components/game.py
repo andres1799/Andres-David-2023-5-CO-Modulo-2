@@ -6,6 +6,7 @@ from game.components.enemies.enemy_manager import EnemyManager
 from game.components.enemies.enemy import Enemy
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.menu import Menu
+from game.components.scoreManager import ScoreManager
 
 
 class Game:
@@ -24,20 +25,19 @@ class Game:
         self.bullet_manager = BulletManager()
         self.menu = Menu('Prees Any Key to Start....', self.screen)
         self.running = False
-        self.death_count = 0
-        self.score = 0
+        self.scoremanager = ScoreManager()
 
     def execute(self):
         self.running = True
         while self.running:
             if not self.playing:
-                self.show_menu(self)
+                self.show_menu()
         pygame.display.quit()
         pygame.quit()
 
     def run(self):
         # Game loop: events - update - draw
-        self.score = 0
+        self.scoremanager.score = 0
         self.playing = True
         while self.playing:
             self.events()
@@ -77,10 +77,11 @@ class Game:
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
 
-    def show_menu(self, game):
+    def show_menu(self):
         self.menu.reset(self.screen)
-        if self.death_count > 0:
-            self.menu.update_message('new message')
+        if self.scoremanager.death_count > 0:
+            self.menu.update_message('Game over Prees any key to restart')
+            self.menu.show_scores(str(self.scoremanager.score), str(self.scoremanager.highscore()), str(self.scoremanager.death_count))
         self.menu.draw(self.screen)
         half_screen_width = SCREEN_WIDTH // 2
         half_screen_height = SCREEN_HEIGHT // 2
@@ -88,12 +89,11 @@ class Game:
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
         self.menu.update(self)
 
-    def update_score(self):
-        self.score += 1
+
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score: {self.score}', True, (255, 255, 255))
+        text = font.render(f'Score: {self.scoremanager.score}', True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.center = (1000, 50)
         self.screen.blit(text, text_rect)
