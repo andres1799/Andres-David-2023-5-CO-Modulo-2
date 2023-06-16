@@ -27,7 +27,10 @@ class EnemyManager:
             enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 1)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
-    def destroyEnemy(self, bullet):
+
+    def destroyEnemy(self, bullet, game):
         for enemy in self.enemies:
             if enemy.rect.colliderect(bullet.rect):
                 self.enemies.remove(enemy)
+                game.update_score()
+

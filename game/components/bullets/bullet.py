@@ -14,11 +14,12 @@ class Bullet(Sprite):
     def update(self, bullets):
         if self.owner == 'enemy':
             self.rect.y += self.SPEED
-            if self.rect.y >= SCREEN_HEIGHT:
-                bullets.remove(self)
         elif self.owner == 'player':
             self.rect.y -= self.SPEED
-            if self.rect.y < -SCREEN_HEIGHT:
-                bullets.remove(self)
+
+        if self.rect.y >= SCREEN_HEIGHT:
+            bullets.remove(self)
+        elif self.rect.y < -SCREEN_HEIGHT:
+            bullets.remove(self)
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
