@@ -7,6 +7,7 @@ from game.components.enemies.enemy import Enemy
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.menu import Menu
 from game.components.scoreManager import ScoreManager
+from game.components.power_ups.power_up_manager import PowerUpManager
 
 
 class Game:
@@ -23,9 +24,10 @@ class Game:
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
-        self.menu = Menu('Prees Any Key to Start....', self.screen)
+        self.menu = Menu(self.screen)
         self.running = False
         self.scoremanager = ScoreManager()
+        self.power_up_manager = PowerUpManager()
 
     def execute(self):
         self.running = True
@@ -38,6 +40,7 @@ class Game:
     def run(self):
         # Game loop: events - update - draw
         self.scoremanager.score = 0
+        self.enemy_manager.enemies = []
         self.playing = True
         while self.playing:
             self.events()
@@ -54,7 +57,7 @@ class Game:
         self.enemy_manager.update(self)
         self.bullet_manager.update(self, self.enemy_manager)
         self.player.update(user_input, self.bullet_manager)
-
+        self.power_up_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -64,6 +67,8 @@ class Game:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
         self.draw_score()
+        self.power_up_manager.draw(self.screen)
+        self.draw_power_up_time()
         pygame.display.update()
         #pygame.display.flip()
 
@@ -79,17 +84,19 @@ class Game:
 
     def show_menu(self):
         self.menu.reset(self.screen)
-        if self.scoremanager.death_count > 0:
-            self.menu.update_message('Game over Prees any key to restart')
-            self.menu.show_scores(str(self.scoremanager.score), str(self.scoremanager.highscore()), str(self.scoremanager.death_count))
-        self.menu.draw(self.screen)
         half_screen_width = SCREEN_WIDTH // 2
         half_screen_height = SCREEN_HEIGHT // 2
+        if self.scoremanager.death_count == 0:
+            self.menu.draw(self.screen, 'Prees Any Key to Start....')
+            #self.menu.show_scores(str(self.scoremanager.score), str(self.scoremanager.highscore()), str(self.scoremanager.death_count))
+        else:
+            self.menu.draw(self.screen, 'Game over. Press any key to restart')
+            self.menu.draw(self.screen, f'Your score: {self.scoremanager.score}', half_screen_width, 350, )
+            self.menu.draw(self.screen, f'Highest score: {self.scoremanager.highest_score}', half_screen_width, 400, )
+            self.menu.draw(self.screen, f'Total deaths: {self.scoremanager.death_count}', half_screen_width, 450, )
         icon = pygame.transform.scale(ICON, (80, 120))
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
         self.menu.update(self)
-
-
 
     def draw_score(self):
         font = pygame.font.Font(FONT_STYLE, 30)
@@ -97,3 +104,23 @@ class Game:
         text_rect = text.get_rect()
         text_rect.center = (1000, 50)
         self.screen.blit(text, text_rect)
+
+        fontLives = pygame.font.Font(FONT_STYLE, 30)
+        textLives = fontLives.render(f'Lives: {self.player.lives}', True, (255, 255, 255))
+        text_rect = textLives.get_rect()
+        text_rect.center = (1000, 80)
+        self.screen.blit(textLives, text_rect)
+
+    def reset(self):
+        self.player.reset()
+    def draw_power_up_time(self):
+        if self.player.has_power_up:
+            time_to_show = round((self.player.power_time_up - pygame.time.get_ticks()) / 1000, 2)
+            if time_to_show >= 0:
+                self.menu.draw(self.screen, f"{self.player.power_up_type.capitalize()} is enables for {time_to_show}", 540, 50, (255, 255, 255))
+            else:
+                self.player.has_power_up = False
+                self.player.power_up_type = DEFAULT_TYPE
+                self.player.set_image()
+
+

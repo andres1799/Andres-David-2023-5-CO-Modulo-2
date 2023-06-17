@@ -11,6 +11,8 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 
+SOUND_EXPLOSION = os.path.join(IMG_DIR, "Sounds/explosion.mp3")
+
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
@@ -29,3 +31,9 @@ ENEMY_1 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_1.png"))
 ENEMY_2 = pygame.image.load(os.path.join(IMG_DIR, "Enemy/enemy_2.png"))
 
 FONT_STYLE = 'freesansbold.ttf'
+
+EXPLOSION = []
+for i in range(1, 13):
+    file = pygame.image.load(os.path.join(IMG_DIR, f"Explosion/{i}.png"))
+    img = pygame.transform.scale(file, (70,70))
+    EXPLOSION.append(img)
