@@ -1,6 +1,6 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE, SHIELD_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.enemies.enemy import Enemy
@@ -117,7 +117,8 @@ class Game:
         if self.player.has_power_up:
             time_to_show = round((self.player.power_time_up - pygame.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
-                self.menu.draw(self.screen, f"{self.player.power_up_type.capitalize()} is enables for {time_to_show}", 540, 50, (255, 255, 255))
+                if self.player.power_up_type == SHIELD_TYPE:
+                    self.menu.draw(self.screen, f"{self.player.power_up_type.capitalize()} is enables for {time_to_show}", 540, 50, (255, 255, 255))
             else:
                 self.player.has_power_up = False
                 self.player.power_up_type = DEFAULT_TYPE

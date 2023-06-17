@@ -1,5 +1,5 @@
 import pygame
-from game.utils.constants import SHIELD_TYPE
+from game.utils.constants import SHIELD_TYPE, SOUND_LASER, SOUND_LASER_ENEMY
 
 
 class BulletManager:
@@ -53,6 +53,11 @@ class BulletManager:
 
     def add_bullet(self, bullet):
         if bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
+            laser = pygame.mixer.Sound(SOUND_LASER_ENEMY)
+            pygame.mixer.Sound.play(laser)
             self.enemy_bullets.append(bullet)
-        elif bullet.owner == 'player' and len(self.enemy_bullets) < 10:
+
+        elif bullet.owner == 'player' or len(self.bullets) < 1:
+            laser = pygame.mixer.Sound(SOUND_LASER)
+            pygame.mixer.Sound.play(laser)
             self.bullets.append(bullet)

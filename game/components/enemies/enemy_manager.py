@@ -1,15 +1,15 @@
 import random
 import time
-from game.components.Explosion import Explosion
+#from game.components.Explosion import Explosion
 import pygame.mixer
 
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import ENEMY_1, ENEMY_2, SCREEN_HEIGHT, SCREEN_WIDTH, SOUND_EXPLOSION, EXPLOSION
+from game.utils.constants import ENEMY_1, ENEMY_2, SCREEN_HEIGHT, SCREEN_WIDTH, SOUND_EXPLOSION,IMG_DIR
 class EnemyManager:
     def __init__(self):
         self.enemies = []
         self.last_enemy_time = time.time()
-        self.IMAGE_ENEMY = {0: ENEMY_1, 1: ENEMY_2, 3: EXPLOSION}
+        self.IMAGE_ENEMY = {0: ENEMY_1, 1: ENEMY_2}
     def update(self, game):
         self.add_enemy()
         for enemy in self.enemies:
@@ -26,7 +26,7 @@ class EnemyManager:
         else:
             speed_x = 5
             speed_y = 6
-        if len(self.enemies) < 2: #or time.time() - self.last_enemy_time >= 2:
+        if len(self.enemies) < 1 or time.time() - self.last_enemy_time >= 1:
             enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 1)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
@@ -34,8 +34,8 @@ class EnemyManager:
     def destroyEnemy(self, bullet, game):
         for enemy in self.enemies:
             if enemy.rect.colliderect(bullet.rect):
-                #img_explode = Explosion(enemy.image)
-                #img_explode.draw_explosion(game.screen)
+                #img_explode = Explosion(enemy.rect)
+                #img_explode.draw(game.screen)
                 self.enemies.remove(enemy)
                 explosion = pygame.mixer.Sound(SOUND_EXPLOSION)
                 pygame.mixer.Sound.play(explosion)

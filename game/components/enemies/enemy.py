@@ -39,8 +39,8 @@ class Enemy(Sprite):
             self.change_movement_x()
 
         if self.rect.y >= SCREEN_HEIGHT:
-            #self.rect.y -= SCREEN_HEIGHT
-            ships.remove(self)
+            self.rect.y -= SCREEN_HEIGHT
+            #ships.remove(self)
 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
