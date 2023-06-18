@@ -28,6 +28,8 @@ class Game:
         self.running = False
         self.scoremanager = ScoreManager()
         self.power_up_manager = PowerUpManager()
+        self.all_sprites = pygame.sprite.Group()
+
 
     def execute(self):
         self.running = True
@@ -42,6 +44,7 @@ class Game:
         self.scoremanager.score = 0
         self.enemy_manager.enemies = []
         self.playing = True
+
         while self.playing:
             self.events()
             self.update()
@@ -58,6 +61,7 @@ class Game:
         self.bullet_manager.update(self, self.enemy_manager)
         self.player.update(user_input, self.bullet_manager)
         self.power_up_manager.update(self)
+        self.all_sprites.update()
 
     def draw(self):
         self.clock.tick(FPS)
@@ -69,6 +73,8 @@ class Game:
         self.draw_score()
         self.power_up_manager.draw(self.screen)
         self.draw_power_up_time()
+        self.all_sprites.draw(self.screen)
+
         pygame.display.update()
         #pygame.display.flip()
 

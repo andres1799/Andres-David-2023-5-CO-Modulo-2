@@ -21,6 +21,8 @@ class Spaceship(Sprite):
         self.has_power_up = False
         self.power_time_up = 0
         self.lives = 3
+        self.shoot_delay = 250
+        self.last_shot = pygame.time.get_ticks()
 
     def update(self, user_input, bullet_manager):
         key_actions = {
@@ -56,8 +58,11 @@ class Spaceship(Sprite):
         screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def shoot(self, bullet_manager):
-        bullet = Bullet(self)
-        bullet_manager.add_bullet(bullet)
+        now = pygame.time.get_ticks()
+        if now - self.last_shot > self.shoot_delay:
+            self.last_shot = now
+            bullet = Bullet(self)
+            bullet_manager.add_bullet(bullet)
 
     def reset(self):
         self.rect.x = self.X_POS

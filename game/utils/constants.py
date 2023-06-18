@@ -40,3 +40,10 @@ for i in range(1, 13):
     file = pygame.image.load(os.path.join(IMG_DIR, f"/Explosion/{i}.png"))
     img = pygame.transform.scale(file, (70,70))
     EXPLOSION.append(img)"""
+explosion_anim = []
+for i in range(1, 13):
+    file = 'Explosion/{}.png'.format(i)
+    img = pygame.image.load(os.path.join(IMG_DIR, file))#.convert()
+    #img.set_colorkey((0, 0, 0))
+    img = pygame.transform.scale(img, (40, 40))
+    explosion_anim.append(img)

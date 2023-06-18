@@ -4,7 +4,7 @@ from game.components.power_ups.shield import Shield
 from game.components.power_ups.hearth import Heart
 from game.components.power_ups.misile import Misile
 
-from game.utils.constants import SPACESHIP_SHIELD, HEART, SHIELD_TYPE
+from game.utils.constants import SPACESHIP_SHIELD, SHIELD_TYPE
 
 class PowerUpManager():
     MIN_TIME_POWER_UP = 5000
@@ -21,7 +21,6 @@ class PowerUpManager():
         misile = Misile()
         self.when_appers += random.randint(self.MIN_TIME_POWER_UP, self.MAX_TIME_POWER_UP)
         self.power_ups.append(power_up)
-        self.when_appers += random.randint(self.MIN_TIME_POWER_UP, self.MAX_TIME_POWER_UP)
         self.power_ups.append(heart)
         self.power_ups.append(misile)
 
@@ -39,11 +38,14 @@ class PowerUpManager():
                 game.player.power_time_up = power_up.start_time + (self.duration * 1000)
                 if game.player.power_up_type == SHIELD_TYPE:
                     game.player.set_image((65, 75), SPACESHIP_SHIELD)
-                elif game.player.power_up_type == HEART:
+                    self.power_ups = []
+                elif game.player.power_up_type == "Heart":
                     game.player.lives += 1
-                else:
+                    self.power_ups = []
+                elif game.player.power_up_type == "Misile":
                     game.enemy_manager.enemies = []
-                self.power_ups.remove(power_up)
+                    self.power_ups = []
+                #self.power_ups.remove(power_up)
 
     def draw(self, screen):
         for power_up in self.power_ups:

@@ -5,4 +5,4 @@ class Misile(PowerUp):
     def __init__(self):
         self.size = (40, 40)
         self.image = pygame.transform.scale(MISILE, self.size)
-        super().__init__(self.image, type=None)
+        super().__init__(self.image, type="Misile")
