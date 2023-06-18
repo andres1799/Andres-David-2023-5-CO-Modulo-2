@@ -12,14 +12,12 @@ class BulletManager:
             if enemy.rect.colliderect(game.player.rect):
                 if game.player.power_up_type != SHIELD_TYPE:
                     game.player.lives -= 1
-
                     explode = Explosion(enemy.rect.center)
                     game.all_sprites.add(explode)
-
                     enemy_manager.enemies.remove(enemy)
-
                     explode = Explosion(game.player.rect.center)
                     game.all_sprites.add(explode)
+                    game.player.hide()
                     if game.player.lives == 0:
                         game.scoremanager.deathCount()
                         game.player.lives = 3
@@ -29,15 +27,19 @@ class BulletManager:
                         break
                 else:
                     enemy_manager.enemies.remove(enemy)
+                    explode = Explosion(enemy.rect.center)
+                    game.all_sprites.add(explode)
 
         for bullet in self.enemy_bullets:
             bullet.update(self.enemy_bullets)
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
-                    game.player.lives -= 1
+
                     explode = Explosion(game.player.rect.center)
                     game.all_sprites.add(explode)
+                    game.player.hide()
+                    game.player.lives -= 1
                     if game.player.lives == 0:
                         game.scoremanager.deathCount()
                         game.player.lives = 3
@@ -65,8 +67,7 @@ class BulletManager:
             pygame.mixer.Sound.play(laser)
             self.enemy_bullets.append(bullet)
 
-        elif bullet.owner == 'player' or\
-                len(self.bullets) < 1:
+        elif bullet.owner == 'player' or len(self.bullets) < 1:
             laser = pygame.mixer.Sound(SOUND_LASER)
             pygame.mixer.Sound.play(laser)
             self.bullets.append(bullet)

@@ -24,11 +24,14 @@ class Spaceship(Sprite):
         self.shoot_delay = 250
         self.last_shot = pygame.time.get_ticks()
         self.hidden = False
-        self.hide_time = pygame.time.get_ticks()
+        self.hide_timer = pygame.time.get_ticks()
 
     def update(self, user_input, bullet_manager):
+        if self.hidden and pygame.time.get_ticks() - self.hide_timer > 1000:
+            self.hidden = False
+            self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 40)
         key_actions = {
-            pygame.K_LEFT: self.move_left,
+            pygame.K_LEFT: lambda: self.move_left(),
             pygame.K_RIGHT: self.move_right,
             pygame.K_UP: self.move_up,
             pygame.K_DOWN: self.move_down,
@@ -74,4 +77,9 @@ class Spaceship(Sprite):
 
     def set_image(self, size = (40, 60), image = SPACESHIP):
         self.image = pygame.transform.scale(image, size)
+
+    def hide(self):
+        self.hidden = True
+        self.hide_timer = pygame.time.get_ticks()
+        self.rect.center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT + 200)
 
