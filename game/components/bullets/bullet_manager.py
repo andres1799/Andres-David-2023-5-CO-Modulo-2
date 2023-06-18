@@ -1,5 +1,6 @@
 import pygame
 from game.utils.constants import SHIELD_TYPE, SOUND_LASER, SOUND_LASER_ENEMY
+from game.components.Explosion import Explosion
 
 
 class BulletManager:
@@ -11,7 +12,14 @@ class BulletManager:
             if enemy.rect.colliderect(game.player.rect):
                 if game.player.power_up_type != SHIELD_TYPE:
                     game.player.lives -= 1
+
+                    explode = Explosion(enemy.rect.center)
+                    game.all_sprites.add(explode)
+
                     enemy_manager.enemies.remove(enemy)
+
+                    explode = Explosion(game.player.rect.center)
+                    game.all_sprites.add(explode)
                     if game.player.lives == 0:
                         game.scoremanager.deathCount()
                         game.player.lives = 3
@@ -28,13 +36,13 @@ class BulletManager:
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
                     game.player.lives -= 1
+                    explode = Explosion(game.player.rect.center)
+                    game.all_sprites.add(explode)
                     if game.player.lives == 0:
-                        print(game.player.lives)
                         game.scoremanager.deathCount()
                         game.player.lives = 3
                         game.menu.actualscreen = True
                         game.playing = False
-                        pygame.time.delay(1000)
                         break
             else:
                 break
@@ -57,7 +65,8 @@ class BulletManager:
             pygame.mixer.Sound.play(laser)
             self.enemy_bullets.append(bullet)
 
-        elif bullet.owner == 'player' or len(self.bullets) < 1:
+        elif bullet.owner == 'player' or\
+                len(self.bullets) < 1:
             laser = pygame.mixer.Sound(SOUND_LASER)
             pygame.mixer.Sound.play(laser)
             self.bullets.append(bullet)

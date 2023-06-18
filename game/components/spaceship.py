@@ -23,6 +23,8 @@ class Spaceship(Sprite):
         self.lives = 3
         self.shoot_delay = 250
         self.last_shot = pygame.time.get_ticks()
+        self.hidden = False
+        self.hide_time = pygame.time.get_ticks()
 
     def update(self, user_input, bullet_manager):
         key_actions = {

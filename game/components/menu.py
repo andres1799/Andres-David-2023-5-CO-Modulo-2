@@ -42,7 +42,7 @@ class Menu:
         self.text_rect = self.text.get_rect()
         self.text_rect.center = (self.HALF_SCREEN_WIDTH + 20, self.HALF_SCREEN_HEIGHT)
 
-    def show_scores(self, score, highscore, deaths):
+    """def show_scores(self, score, highscore, deaths):
         self.score = self.font.render("Your score: " + score, True, (0, 0, 0))
         self.text_rect2 = self.score.get_rect()
         self.text_rect2.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 50)
@@ -53,6 +53,6 @@ class Menu:
 
         self.deaths = self.font.render("Total deaths: " + deaths, True, (0, 0, 0))
         self.text_rect4 = self.score.get_rect()
-        self.text_rect4.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 150)
+        self.text_rect4.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 150)"""
 
 

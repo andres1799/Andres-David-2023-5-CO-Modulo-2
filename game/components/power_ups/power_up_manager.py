@@ -3,7 +3,7 @@ import pygame
 from game.components.power_ups.shield import Shield
 from game.components.power_ups.hearth import Heart
 from game.components.power_ups.misile import Misile
-
+from game.components.Explosion import Explosion
 from game.utils.constants import SPACESHIP_SHIELD, SHIELD_TYPE
 
 class PowerUpManager():
@@ -43,8 +43,12 @@ class PowerUpManager():
                     game.player.lives += 1
                     self.power_ups = []
                 elif game.player.power_up_type == "Misile":
+                    for enemy in game.enemy_manager.enemies:
+                        explode = Explosion(enemy.rect.center)
+                        game.all_sprites.add(explode)
                     game.enemy_manager.enemies = []
                     self.power_ups = []
+
                 #self.power_ups.remove(power_up)
 
     def draw(self, screen):
