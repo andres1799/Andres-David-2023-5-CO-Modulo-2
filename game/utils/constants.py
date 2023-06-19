@@ -24,6 +24,7 @@ SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 START_SREEN = pygame.image.load(os.path.join(IMG_DIR, 'Other/StartScreen.png'))
 
+
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 MISILE = pygame.image.load(os.path.join(IMG_DIR, 'Other/destroy.png'))
 
