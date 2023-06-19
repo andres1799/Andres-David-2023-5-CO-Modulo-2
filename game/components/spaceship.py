@@ -70,7 +70,6 @@ class Spaceship(Sprite):
             laser = pygame.mixer.Sound(SOUND_LASER)
             laser.set_volume(0.1)
             pygame.mixer.Sound.play(laser)
-
             bullet_manager.add_bullet(bullet)
 
     def reset(self):

@@ -30,6 +30,8 @@ MISILE = pygame.image.load(os.path.join(IMG_DIR, 'Other/destroy.png'))
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = 'shield'
+HEART_TYPE = 'Heart'
+MISILE_TYPE = 'Misile'
 
 SPACESHIP = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SPACESHIP_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship_shield.png"))

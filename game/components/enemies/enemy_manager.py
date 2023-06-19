@@ -26,17 +26,17 @@ class EnemyManager:
         enemy_type = self.IMAGE_ENEMY[random.randint(0, 1)]
         if enemy_type == ENEMY_1:
             speed_x = 3
-            speed_y = 2
+            speed_y = 1
         else:
             speed_x = 5
-            speed_y = 2
+            speed_y = 1
 
         """if game.scoremanager.score != 0 and game.scoremanager.score % 10 == 0:
             if len(self.enemies) < 1:
                 self.enemies = []
                 enemy = Enemy(self.IMAGE_ENEMY[3], speed_x, speed_y)
                 self.enemies.append(enemy)"""
-        if len(self.enemies) < 2 or time.time() - self.last_enemy_time >= 3:
+        if len(self.enemies) < 2 or time.time() - self.last_enemy_time >= 2:
             enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 3)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
