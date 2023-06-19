@@ -1,7 +1,7 @@
 import pygame
 import random
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, DEFAULT_TYPE
+from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, DEFAULT_TYPE, SOUND_LASER
 from game.components.bullets.bullet import Bullet
 class Spaceship(Sprite):
     SPACESHIP_WIDTH = 40
@@ -67,6 +67,8 @@ class Spaceship(Sprite):
         if now - self.last_shot > self.shoot_delay:
             self.last_shot = now
             bullet = Bullet(self)
+            laser = pygame.mixer.Sound(SOUND_LASER)
+            pygame.mixer.Sound.play(laser)
             bullet_manager.add_bullet(bullet)
 
     def reset(self):

@@ -7,9 +7,6 @@ class Menu:
     def __init__(self, screen):
         screen.fill((255, 255, 255))
         self.font = pygame.font.Font(FONT_STYLE, 30)
-        #self.text = self.font.render(message, True, (0, 0, 0))
-        #self.text_rect = self.text.get_rect()
-        #self.text_rect.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT)
         self.actualscreen = False
         self.score = 0
         self.highscore = 0
@@ -20,19 +17,18 @@ class Menu:
         self.handle_events_on_menu(game)
 
     def draw(self, screen, message, x = HALF_SCREEN_WIDTH, y = HALF_SCREEN_HEIGHT, color = (0, 0, 0)):
-        #screen.blit(self.text, self.text_rect)
         text = self.font.render(message, True, color)
         text_rect = text.get_rect()
         text_rect.center = (x, y)
         screen.blit(text, text_rect)
 
-
     def handle_events_on_menu(self, game):
+        user_input = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.running = False
                 game.playing = False
-            elif event.type == pygame.KEYDOWN:
+            elif user_input[pygame.K_RETURN]:
                 game.run()
     def reset(self, screen):
         screen.fill((255, 255, 255))
@@ -41,18 +37,5 @@ class Menu:
         self.text = self.font.render(message, True, (0, 0, 0))
         self.text_rect = self.text.get_rect()
         self.text_rect.center = (self.HALF_SCREEN_WIDTH + 20, self.HALF_SCREEN_HEIGHT)
-
-    """def show_scores(self, score, highscore, deaths):
-        self.score = self.font.render("Your score: " + score, True, (0, 0, 0))
-        self.text_rect2 = self.score.get_rect()
-        self.text_rect2.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 50)
-
-        self.highscore = self.font.render("Highest score: " + highscore, True, (0, 0, 0))
-        self.text_rect3 = self.highscore.get_rect()
-        self.text_rect3.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 100)
-
-        self.deaths = self.font.render("Total deaths: " + deaths, True, (0, 0, 0))
-        self.text_rect4 = self.score.get_rect()
-        self.text_rect4.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT + 150)"""
 
 

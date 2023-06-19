@@ -14,6 +14,8 @@ ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
 SOUND_EXPLOSION = os.path.join(IMG_DIR, "Sounds/explosion.mp3")
 SOUND_LASER = os.path.join(IMG_DIR, "Sounds/laser.mp3")
 SOUND_LASER_ENEMY = os.path.join(IMG_DIR, "Sounds/laserEnemy.mp3")
+MUSIC1 = os.path.join(IMG_DIR, "Sounds/musica1.wav")
+SHIELD_SOUND = os.path.join(IMG_DIR, "Sounds/shieldSound.mp3")
 
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 
@@ -44,5 +46,5 @@ explosion_anim = []
 for i in range(1, 13):
     file = 'Explosion/{}.png'.format(i)
     img = pygame.image.load(os.path.join(IMG_DIR, file))#.convert()
-    img = pygame.transform.scale(img, (40, 40))
+    img = pygame.transform.scale(img, (50, 50))
     explosion_anim.append(img)

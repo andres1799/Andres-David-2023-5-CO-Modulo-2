@@ -4,7 +4,7 @@ from game.components.power_ups.shield import Shield
 from game.components.power_ups.hearth import Heart
 from game.components.power_ups.misile import Misile
 from game.components.Explosion import Explosion
-from game.utils.constants import SPACESHIP_SHIELD, SHIELD_TYPE
+from game.utils.constants import SPACESHIP_SHIELD, SHIELD_TYPE, SHIELD_SOUND
 
 class PowerUpManager():
     MIN_TIME_POWER_UP = 5000
@@ -38,11 +38,13 @@ class PowerUpManager():
                 game.player.power_time_up = power_up.start_time + (self.duration * 1000)
                 if game.player.power_up_type == SHIELD_TYPE:
                     game.player.set_image((65, 75), SPACESHIP_SHIELD)
+                    shieldSound = pygame.mixer.Sound(SHIELD_SOUND)
+                    pygame.mixer.Sound.play(shieldSound)
                     self.power_ups = []
-                elif game.player.power_up_type == "Heart":
+                if game.player.power_up_type == "Heart":
                     game.player.lives += 1
                     self.power_ups = []
-                elif game.player.power_up_type == "Misile":
+                if game.player.power_up_type == "Misile":
                     for enemy in game.enemy_manager.enemies:
                         explode = Explosion(enemy.rect.center)
                         game.all_sprites.add(explode)

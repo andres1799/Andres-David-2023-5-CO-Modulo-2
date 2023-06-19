@@ -29,7 +29,7 @@ class EnemyManager:
         else:
             speed_x = 5
             speed_y = 2
-        if len(self.enemies) < 2:# or time.time() - self.last_enemy_time >= 1:
+        if len(self.enemies) < 2 or time.time() - self.last_enemy_time >= 1:
             enemy = Enemy(self.IMAGE_ENEMY[random.randint(0, 1)], speed_x, speed_y)
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()

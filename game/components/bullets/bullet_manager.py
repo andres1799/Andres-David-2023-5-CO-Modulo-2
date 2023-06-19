@@ -35,7 +35,6 @@ class BulletManager:
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
-
                     explode = Explosion(game.player.rect.center)
                     game.all_sprites.add(explode)
                     game.player.hide()
@@ -46,8 +45,8 @@ class BulletManager:
                         game.menu.actualscreen = True
                         game.playing = False
                         break
-            else:
-                break
+            #else:
+               # break
 
         for bullet in self.bullets:
             bullet.update(self.bullets)
@@ -62,12 +61,8 @@ class BulletManager:
             bullet.draw(screen)
 
     def add_bullet(self, bullet):
-        if bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
-            laser = pygame.mixer.Sound(SOUND_LASER_ENEMY)
-            pygame.mixer.Sound.play(laser)
+        if bullet.owner == "enemy":
             self.enemy_bullets.append(bullet)
 
-        elif bullet.owner == 'player' or len(self.bullets) < 1:
-            laser = pygame.mixer.Sound(SOUND_LASER)
-            pygame.mixer.Sound.play(laser)
+        elif bullet.owner == "player":
             self.bullets.append(bullet)
