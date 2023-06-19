@@ -43,10 +43,11 @@ class Game:
         # Game loop: events - update - draw
         self.scoremanager.score = 0
         self.enemy_manager.enemies = []
+        self.bullet_manager.reset()
         self.playing = True
         pygame.mixer.music.load(MUSIC1)
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.4)
+        pygame.mixer.music.set_volume(0.2)
         while self.playing:
             self.events()
             self.update()
@@ -99,8 +100,8 @@ class Game:
             image_height = imageStart.get_height()
             self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg))
             self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg - image_height))
-            self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg))
-            self.menu.draw(self.screen, 'Prees Enter to Start....')
+
+
 
         else:
             pygame.mixer.music.stop()

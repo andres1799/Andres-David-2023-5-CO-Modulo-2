@@ -19,7 +19,7 @@ class Menu:
     def draw(self, screen, message, x = HALF_SCREEN_WIDTH, y = HALF_SCREEN_HEIGHT, color = (255, 255, 255)):
         text = self.font.render(message, True, color)
         text_rect = text.get_rect()
-        text_rect.center = (x, y - 100)
+        text_rect.center = (x, y)
         screen.blit(text, text_rect)
 
     def handle_events_on_menu(self, game):
