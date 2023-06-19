@@ -1,6 +1,6 @@
 import pygame
 
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE, SHIELD_TYPE, MUSIC1
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE, SHIELD_TYPE, MUSIC1, START_SREEN
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.enemies.enemy import Enemy
@@ -46,7 +46,7 @@ class Game:
         self.playing = True
         pygame.mixer.music.load(MUSIC1)
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.set_volume(0.4)
         while self.playing:
             self.events()
             self.update()
@@ -95,16 +95,24 @@ class Game:
         half_screen_width = SCREEN_WIDTH // 2
         half_screen_height = SCREEN_HEIGHT // 2
         if self.scoremanager.death_count == 0:
+            imageStart = pygame.transform.scale(START_SREEN, (SCREEN_WIDTH, SCREEN_HEIGHT))
+            image_height = imageStart.get_height()
+            self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg))
+            self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg - image_height))
+            self.screen.blit(imageStart, (self.x_pos_bg, self.y_pos_bg))
             self.menu.draw(self.screen, 'Prees Enter to Start....')
-            #self.menu.show_scores(str(self.scoremanager.score), str(self.scoremanager.highscore()), str(self.scoremanager.death_count))
+
         else:
             pygame.mixer.music.stop()
+            image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
+            image_height = image.get_height()
+            self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg))
+            self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.menu.draw(self.screen, 'Game over. Press any key to restart')
             self.menu.draw(self.screen, f'Your score: {self.scoremanager.score}', half_screen_width, 350, )
             self.menu.draw(self.screen, f'Highest score: {self.scoremanager.highest_score}', half_screen_width, 400, )
             self.menu.draw(self.screen, f'Total deaths: {self.scoremanager.death_count}', half_screen_width, 450, )
-        icon = pygame.transform.scale(ICON, (80, 120))
-        self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
+
         self.menu.update(self)
 
     def draw_score(self):

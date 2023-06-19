@@ -1,5 +1,5 @@
 import pygame.font
-from game.utils.constants import FONT_STYLE, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import FONT_STYLE, SCREEN_WIDTH, SCREEN_HEIGHT, START_SREEN
 
 class Menu:
     HALF_SCREEN_WIDTH = SCREEN_WIDTH // 2
@@ -16,10 +16,10 @@ class Menu:
         pygame.display.update()
         self.handle_events_on_menu(game)
 
-    def draw(self, screen, message, x = HALF_SCREEN_WIDTH, y = HALF_SCREEN_HEIGHT, color = (0, 0, 0)):
+    def draw(self, screen, message, x = HALF_SCREEN_WIDTH, y = HALF_SCREEN_HEIGHT, color = (255, 255, 255)):
         text = self.font.render(message, True, color)
         text_rect = text.get_rect()
-        text_rect.center = (x, y)
+        text_rect.center = (x, y - 100)
         screen.blit(text, text_rect)
 
     def handle_events_on_menu(self, game):

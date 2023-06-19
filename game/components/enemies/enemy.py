@@ -38,6 +38,7 @@ class Enemy(Sprite):
             bullet = Bullet(self)
             bullet_manager.add_bullet(bullet)
             laser = pygame.mixer.Sound(SOUND_LASER_ENEMY)
+            laser.set_volume(0.1)
             pygame.mixer.Sound.play(laser)
             self.shoot_num += 1
             self.shooting_time = pygame.time.get_ticks() + 2000
